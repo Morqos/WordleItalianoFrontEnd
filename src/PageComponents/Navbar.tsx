@@ -24,7 +24,7 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             
           </Typography>
-          <Button color="inherit">Settings</Button>
+          <Button color="inherit">Impostazioni</Button>
         </Toolbar>
       </AppBar>
     </Box>

@@ -1,0 +1,54 @@
+.card-normal {
+  width: 5rem;
+  height: 5rem;
+
+  transform: rotateY(180deg);
+  cursor: pointer;
+  background-color: white;
+}
+
+.card-green {
+  width: 5rem;
+  height: 5rem;
+
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+  transition-property: background-color, transform;
+  transition-duration: 0.3s;
+
+  transform: rotateY(0deg);
+  cursor: pointer;
+  background-color: green;
+}
+
+.card-yellow {
+  width: 5rem;
+  height: 5rem;
+
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+  transition-property: background-color, transform;
+  transition-duration: 0.3s;
+
+  transform: rotateY(0deg);
+  cursor: pointer;
+  background-color: yellow;
+}
+
+.card-grey {
+  width: 5rem;
+  height: 5rem;
+
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+  transition-property: background-color, transform;
+  transition-duration: 0.3s;
+
+  transform: rotateY(0deg);
+  cursor: pointer;
+  background-color: grey;
+}
+
+.inner-in-card {
+  position: absolute;
+}
