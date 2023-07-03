@@ -1,8 +1,12 @@
 import Board from '../GameComponents/Board'
+import Keyboard from '../GameComponents/Keyboard'
 
 const HomePage = () => {
   return (
-    <Board/>
+    <>
+      <Board/>
+      <Keyboard/>
+    </>
   );
 }
  
