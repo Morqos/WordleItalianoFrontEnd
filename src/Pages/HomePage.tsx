@@ -1,11 +1,9 @@
-import Board from '../GameComponents/Board'
-import Keyboard from '../GameComponents/Keyboard'
+import Game from '../GameComponents/Game';
 
 const HomePage = () => {
   return (
     <>
-      <Board/>
-      <Keyboard/>
+      <Game/>
     </>
   );
 }

@@ -8,21 +8,35 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
 import BackspaceIcon from '@mui/icons-material/Backspace';
+import { Button } from "@mui/material";
 
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#818384",
+
+  '&:hover': {
+    background: "#899499",
+    cursor: "pointer"
+  },
+
   padding: theme.spacing(1),
+  
   justifyContent: 'center',
   textAlign: 'center',
   alignItems: 'center',
   display: 'flex',
+  
   color: "white",
 
   fontWeight: 600,
 }));
 
-const Keyboard = () => {
+const Keyboard = (
+    {submitWordAttempt, wordAttempt, setWordAttempt}:
+      {submitWordAttempt: any, wordAttempt: string, setWordAttempt: any}
+  ) => {
+
+  let isMobileScreen = CheckMobileScreen();
 
   const SIZE_ENTER_AND_BACK_KEY = 1.8
   const SIZE_LETTER_KEY_FIRST_ROW = 1.2
@@ -40,7 +54,6 @@ const Keyboard = () => {
   const [firstRowWidth, setFirstRowWidth] = useState(FIRST_ROW_WIDTH);
   const [secondRowWidth, setSecondRowWidth] = useState(SECOND_ROW_WIDTH);
   const [thirdRowWidth, setThirdRowWidth] = useState(THIRD_ROW_WIDTH);
-  let isMobileScreen = CheckMobileScreen();
 
 
   const HEIGHT_LETTER = "65px"
@@ -68,12 +81,13 @@ const Keyboard = () => {
     return (
       <Grid item xs={SIZE_LETTER_KEY_FIRST_ROW}>
         <Item
+          onClick={() => letterClicked(_letter)}
           sx={{
             height: heightLetter,
             width: widthLetter,
             fontSize: letterFontSize
           }}>
-          {_letter}
+            {_letter}
         </Item>
       </Grid>
     );
@@ -83,6 +97,7 @@ const Keyboard = () => {
     return (
       <Grid item xs={SIZE_LETTER_KEY_SECOND_ROW}>
         <Item
+          onClick={() => letterClicked(_letter)}
           sx={{
             height: heightLetter,
             width: widthLetter,
@@ -94,13 +109,14 @@ const Keyboard = () => {
     );
   }
 
-  function getKeyThirdRow(_letter:string, _widthEnterBack=widthLetter, _xs=SIZE_LETTER_KEY_THIRD_ROW) {
+  function getKeyThirdRow(_letter: string) {
     return (
-      <Grid item xs={_xs}>
+      <Grid item xs={SIZE_LETTER_KEY_THIRD_ROW}>
         <Item
+          onClick={() => letterClicked(_letter)}
           sx={{
             height: heightLetter,
-            width: _widthEnterBack,
+            width: widthLetter,
             fontSize: letterFontSize
           }}>
             {_letter}
@@ -109,10 +125,11 @@ const Keyboard = () => {
     );
   }
 
-  function getKeyEnter(_widthEnterBack: string, _xs=SIZE_LETTER_KEY_THIRD_ROW){
+  function getKeyEnter(_widthEnterBack: string){
     return (
-      <Grid item xs={_xs}>
+      <Grid item xs={SIZE_ENTER_AND_BACK_KEY}>
         <Item
+          onClick={() => enterClicked()}
           sx={{
             height: heightLetter,
             width: _widthEnterBack,
@@ -125,15 +142,45 @@ const Keyboard = () => {
     );
   }
 
-  function getKeyBackspace(_widthEnterBack: string, _xs=SIZE_LETTER_KEY_THIRD_ROW){
+  function getKeyBackspace(_widthEnterBack: string){
     return (
-      <Grid item xs={_xs}>
-        <Item sx={{height: heightLetter, width: _widthEnterBack}}>
+      <Grid item xs={SIZE_ENTER_AND_BACK_KEY}>
+        <Item
+          onClick={() => backClicked()}
+          sx={{
+            height: heightLetter,
+            width: _widthEnterBack
+          }}>
             <BackspaceIcon/>
         </Item>
       </Grid>
     );
   }
+
+  function letterClicked(_letter: string)
+  {
+    if(wordAttempt.length >= 5){
+      return;
+    }
+    setWordAttempt(wordAttempt + _letter)
+  }
+
+  function backClicked()
+  {
+    if(wordAttempt.length === 0){
+      return
+    }
+    setWordAttempt(wordAttempt.slice(0, -1))
+  }
+
+  function enterClicked()
+  {
+    if(wordAttempt.length !== 5){
+      return
+    }
+    submitWordAttempt()
+  }
+
 
   useEffect(() => {
     if(isMobileScreen) {
@@ -215,7 +262,7 @@ const Keyboard = () => {
         justifyContent='center'
         mx="auto"
       >
-        {getKeyEnter(widthBackEnter, SIZE_ENTER_AND_BACK_KEY)}
+        {getKeyEnter(widthBackEnter)}
         {getKeyThirdRow("Z")}
         {getKeyThirdRow("X")}
         {getKeyThirdRow("C")}
@@ -223,7 +270,7 @@ const Keyboard = () => {
         {getKeyThirdRow("B")}
         {getKeyThirdRow("N")}
         {getKeyThirdRow("M")}
-        {getKeyBackspace(widthBackEnter, SIZE_ENTER_AND_BACK_KEY)}
+        {getKeyBackspace(widthBackEnter)}
       </Grid>
     </Box>
     </>
