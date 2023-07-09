@@ -11,8 +11,8 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
-  height: "45px",
-  width: "45px"
+  height: 45,
+  width: 45
 }));
 
 const Board = () => {
@@ -25,7 +25,7 @@ const Board = () => {
   }
 
   return (
-    <Box sx={{ mt: 5, mx: 'auto', width: '350px'}}>
+    <Box sx={{ mt: 5, mx: 'auto', width: 350}}>
       <Grid
         container
         spacing={1}
