@@ -7,6 +7,18 @@ type letterToPresence = {
   [letter: string]: number
 }
 
+type presenceToColor = {
+  [presence: number]: string
+}
+
+export const mapPresenceToColor: presenceToColor = {};
+
+mapPresenceToColor[NOT_SELECTED] = ""
+mapPresenceToColor[NOT_PRESENT] = "#3a3a3c"
+mapPresenceToColor[PRESENT_WRONG_PLACE] = "#b59f3b"
+mapPresenceToColor[PRESENT_RIGHT_PLACE] = "#538d4e"
+
+
 const mapLetterToPresence: letterToPresence = {};
 
 mapLetterToPresence['Q'] = 0;

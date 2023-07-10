@@ -34,11 +34,15 @@ const Game = () => {
   {
     const sizeDictionary5Letters = words5Letters["words"].length;
     const indexWord = Math.floor(Math.random() * sizeDictionary5Letters);
-    return words5Letters["words"][indexWord];
+    return words5Letters["words"][indexWord].toUpperCase();
   }
 
   function submitWordAttempt()
   {
+    if(wordAttempt.length !== 5){
+      return
+    }
+
     let tmpAttempts = attempts
     tmpAttempts.push(wordAttempt)
     setAttempts(tmpAttempts)
@@ -47,9 +51,12 @@ const Game = () => {
     setWordAttempt("")
   }
 
+  console.log(gameWord)
+
   return ( 
     <>
       <Board
+        gameWord={gameWord}
         attemptNumber={attemptNumber}
         attempts={attempts}
         wordAttempt={wordAttempt}

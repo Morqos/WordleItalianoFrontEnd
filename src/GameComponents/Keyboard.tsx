@@ -129,7 +129,7 @@ const Keyboard = (
     return (
       <Grid item xs={SIZE_ENTER_AND_BACK_KEY}>
         <Item
-          onClick={() => enterClicked()}
+          onClick={() => submitWordAttempt()}
           sx={{
             height: heightLetter,
             width: _widthEnterBack,
@@ -172,15 +172,6 @@ const Keyboard = (
     }
     setWordAttempt(wordAttempt.slice(0, -1))
   }
-
-  function enterClicked()
-  {
-    if(wordAttempt.length !== 5){
-      return
-    }
-    submitWordAttempt()
-  }
-
 
   useEffect(() => {
     if(isMobileScreen) {

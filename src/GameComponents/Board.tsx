@@ -4,6 +4,13 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
+import {
+  NOT_PRESENT,
+  PRESENT_WRONG_PLACE,
+  PRESENT_RIGHT_PLACE,
+  mapPresenceToColor
+} from './Common';
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
   border: '1px solid',
@@ -25,8 +32,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Board = (
-    {attemptNumber, attempts, wordAttempt, setWordAttempt}:
+    {gameWord, attemptNumber, attempts, wordAttempt, setWordAttempt}:
       {
+        gameWord: string,
         attemptNumber: number,
         attempts: string[],
         wordAttempt: string,
@@ -35,20 +43,86 @@ const Board = (
   ) => {
 
   function getCell(_row: number, _position: number) {
-    
+
+    let colorBackground = "transparent"
     let wordToDisplay = "     "
     if(_row === attemptNumber){
       wordToDisplay = wordAttempt
     }
     else if(_row < attemptNumber) {
       wordToDisplay = attempts[_row]
+      const colorsWordToDisplay = getColorsWord(wordToDisplay);
+      switch (colorsWordToDisplay[_position]) {
+        case NOT_PRESENT:
+          colorBackground = mapPresenceToColor[NOT_PRESENT]
+          break;
+        case PRESENT_RIGHT_PLACE:
+          colorBackground = mapPresenceToColor[PRESENT_RIGHT_PLACE]
+          break;
+        case PRESENT_WRONG_PLACE:
+          colorBackground = mapPresenceToColor[PRESENT_WRONG_PLACE]
+          break;
+        default:
+          break;
+      }
     }
 
     return (
       <Grid item xs={2.4} md={2.4}>
-        <Item>{wordToDisplay[_position]}</Item>
+        <Item
+          sx={{
+            backgroundColor: colorBackground
+          }}  
+        >
+          {wordToDisplay[_position]}
+        </Item>
       </Grid>
     );
+  }
+
+  function getColorsWord(wordRow: string): number[]{
+
+    const arrayColorsWord = Array(gameWord.length).fill(NOT_PRESENT)    
+
+    const letterToOccurrences = new Map<string, number>();
+    for (let i = 0; i < gameWord.length; i++) {
+      const letter = gameWord[i]
+      
+      letterToOccurrences.set(
+        letter,
+          letterToOccurrences.has(letter) ?
+            letterToOccurrences.get(letter)! + 1 :
+            1
+      )
+    }
+
+    for (let i = 0; i < wordRow.length; i++) {
+      const currentLetter = wordRow[i]
+      if(currentLetter === gameWord[i]) {
+        arrayColorsWord[i] = PRESENT_RIGHT_PLACE
+        letterToOccurrences.set(
+          currentLetter,
+          letterToOccurrences.has(currentLetter) ?
+            letterToOccurrences.get(currentLetter)! - 1 :
+            1
+        )
+      }
+    }
+
+    for (let i = 0; i < wordRow.length; i++) {
+      const currentLetter = wordRow[i]
+      if((currentLetter !== gameWord[i]) &&
+          gameWord.includes(currentLetter) &&
+          letterToOccurrences.has(currentLetter) &&
+          letterToOccurrences.get(currentLetter)! > 0) {
+        arrayColorsWord[i] = PRESENT_WRONG_PLACE
+        letterToOccurrences.set(
+          currentLetter,
+          letterToOccurrences.get(currentLetter)! - 1)
+      }
+    }
+
+    return arrayColorsWord
   }
 
   return (
