@@ -4,7 +4,8 @@ import mapLetterToPresence, {
   NOT_PRESENT,
   NOT_SELECTED,
   PRESENT_WRONG_PLACE,
-  PRESENT_RIGHT_PLACE
+  PRESENT_RIGHT_PLACE,
+  letterToPresence
 } from "./Common";
 
 import words5Letters from "../Dictionaries/words_5_letters.json"
@@ -13,7 +14,7 @@ import { useEffect, useState } from "react";
 const Game = () => {
 
   const [gameWord, setGameWord] = useState("");
-  const [mapLetters, setMapLetters] = useState({})
+  const [lettersAttempted, setLettersAttempted] = useState<letterToPresence>({})
   const [wordAttempt, setWordAttempt] = useState("")
 
   const [attempts, setAttempts] = useState<string[]>([])
@@ -27,7 +28,10 @@ const Game = () => {
   {
     const gameWord = getGameWord();
     setGameWord(gameWord);
-    setMapLetters(mapLetterToPresence);
+    setWordAttempt("")
+    setAttemptNumber(0)
+    setAttempts([])
+    setLettersAttempted(structuredClone(mapLetterToPresence))
   }
 
   function getGameWord()
@@ -43,12 +47,48 @@ const Game = () => {
       return
     }
 
+    if(hasWon()){
+      launchGame();
+      return;
+    }
+
     let tmpAttempts = attempts
     tmpAttempts.push(wordAttempt)
     setAttempts(tmpAttempts)
 
+    updateLettersAttempted()
     setAttemptNumber(attemptNumber + 1)
     setWordAttempt("")
+  }
+
+  function hasWon(){
+    let hasWon = true
+    for(let i = 0; i < wordAttempt.length; i++)
+    {
+      if(wordAttempt[i] !== gameWord[i]) {
+        hasWon = false
+        break
+      }
+    }
+    return hasWon
+  }
+
+  function updateLettersAttempted() {
+    for(let i = 0; i < wordAttempt.length; i++){
+      const letter = wordAttempt[i]
+      if(letter === gameWord[i]) {
+        lettersAttempted[letter] = PRESENT_RIGHT_PLACE
+      }
+      else if(gameWord.includes(letter)) {
+        if (lettersAttempted[letter] !== PRESENT_RIGHT_PLACE) {
+          lettersAttempted[letter] = PRESENT_WRONG_PLACE
+        }
+      }
+      else {
+        lettersAttempted[letter] = NOT_PRESENT
+      }
+    }
+    setLettersAttempted(lettersAttempted)
   }
 
   console.log(gameWord)
@@ -62,7 +102,11 @@ const Game = () => {
         wordAttempt={wordAttempt}
         setWordAttempt={setWordAttempt}
       />
-      <Keyboard submitWordAttempt={submitWordAttempt} wordAttempt={wordAttempt} setWordAttempt={setWordAttempt}/>
+      <Keyboard
+        lettersAttempted={lettersAttempted}
+        submitWordAttempt={submitWordAttempt}
+        wordAttempt={wordAttempt}
+        setWordAttempt={setWordAttempt}/>
     </>
   );
 }

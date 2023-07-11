@@ -18,7 +18,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
   padding: theme.spacing(1),
 
-  fontSize: 36,
+  fontWeight: 500,
+  fontSize: 42,
 
   justifyContent: 'center',
   textAlign: 'center',

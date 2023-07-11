@@ -9,13 +9,13 @@ import Box from '@mui/material/Box';
 
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import { Button } from "@mui/material";
+import { letterToPresence, mapPresenceToColor } from "./Common";
 
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#818384",
 
   '&:hover': {
-    background: "#899499",
     cursor: "pointer"
   },
 
@@ -32,8 +32,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Keyboard = (
-    {submitWordAttempt, wordAttempt, setWordAttempt}:
-      {submitWordAttempt: any, wordAttempt: string, setWordAttempt: any}
+    {lettersAttempted, submitWordAttempt, wordAttempt, setWordAttempt}:
+      {lettersAttempted: letterToPresence, submitWordAttempt: any, wordAttempt: string, setWordAttempt: any}
   ) => {
 
   let isMobileScreen = CheckMobileScreen();
@@ -60,6 +60,7 @@ const Keyboard = (
   const WIDTH_LETTER = "45px"
   const WIDTH_ENTER_AND_BACK = "75px"
 
+  const HEIGHT_LETTER_MOBILE = "35px"
   const WIDTH_LETTER_MOBILE = "15px"
   const WIDTH_ENTER_AND_BACK_MOBILE = "30px"
 
@@ -83,6 +84,7 @@ const Keyboard = (
         <Item
           onClick={() => letterClicked(_letter)}
           sx={{
+            backgroundColor: mapPresenceToColor[lettersAttempted[_letter]],
             height: heightLetter,
             width: widthLetter,
             fontSize: letterFontSize
@@ -99,6 +101,7 @@ const Keyboard = (
         <Item
           onClick={() => letterClicked(_letter)}
           sx={{
+            backgroundColor: mapPresenceToColor[lettersAttempted[_letter]],
             height: heightLetter,
             width: widthLetter,
             fontSize: letterFontSize
@@ -115,6 +118,7 @@ const Keyboard = (
         <Item
           onClick={() => letterClicked(_letter)}
           sx={{
+            backgroundColor: mapPresenceToColor[lettersAttempted[_letter]],
             height: heightLetter,
             width: widthLetter,
             fontSize: letterFontSize
@@ -188,6 +192,7 @@ const Keyboard = (
     setSecondRowWidth(SECOND_ROW_WIDTH_MOBILE)
     setThirdRowWidth(THIRD_ROW_WIDTH_MOBILE)
 
+    setHeightLetter(HEIGHT_LETTER_MOBILE)
     setWidthLetter(WIDTH_LETTER_MOBILE)
     setWidthBackEnter(WIDTH_ENTER_AND_BACK_MOBILE)
     setEnterFontSize(ENTER_FONT_SIZE_MOBILE)
@@ -200,6 +205,7 @@ const Keyboard = (
     setSecondRowWidth(SECOND_ROW_WIDTH)
     setThirdRowWidth(THIRD_ROW_WIDTH)
 
+    setHeightLetter(HEIGHT_LETTER)
     setWidthLetter(WIDTH_LETTER)
     setWidthBackEnter(WIDTH_ENTER_AND_BACK)
     setEnterFontSize(ENTER_FONT_SIZE)
@@ -209,11 +215,10 @@ const Keyboard = (
 
   return (
     <>
-    <Box sx={{ mt: 5, mx: 'auto', width: firstRowWidth}}>
+    <Box sx={{ mt: 10, mx: 'auto', width: firstRowWidth}}>
       <Grid
         container
         spacing={1}
-        mx="auto"
       >
         {getKeyFirstRow("Q")}
         {getKeyFirstRow("W")}
@@ -232,7 +237,6 @@ const Keyboard = (
       <Grid
         container
         spacing={1}
-        mx="auto"
       >
         {getKeySecondRow("A")}
         {getKeySecondRow("S")}
@@ -251,7 +255,6 @@ const Keyboard = (
         container
         spacing={1}
         justifyContent='center'
-        mx="auto"
       >
         {getKeyEnter(widthBackEnter)}
         {getKeyThirdRow("Z")}
