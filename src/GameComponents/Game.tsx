@@ -1,5 +1,6 @@
 import Board from "./Board";
 import Keyboard from "./Keyboard";
+import Win from "./EndGame/Win";
 import mapLetterToPresence, {
   NOT_PRESENT,
   NOT_SELECTED,
@@ -10,6 +11,7 @@ import mapLetterToPresence, {
 
 import words5Letters from "../Dictionaries/words_5_letters.json"
 import { useEffect, useState } from "react";
+import Lose from "./EndGame/Lose";
 
 const Game = () => {
 
@@ -19,6 +21,9 @@ const Game = () => {
 
   const [attempts, setAttempts] = useState<string[]>([])
   const [attemptNumber, setAttemptNumber] = useState(0)
+  const [hasPlayerWon, setHasPlayerWon] = useState(false)
+  const [hasPlayerLost, setHasPlayerLost] = useState(false)
+
 
   useEffect(() => {
     launchGame();
@@ -32,6 +37,12 @@ const Game = () => {
     setAttemptNumber(0)
     setAttempts([])
     setLettersAttempted(structuredClone(mapLetterToPresence))
+  }
+
+  function setWonLost()
+  {
+    setHasPlayerWon(false)
+    setHasPlayerLost(false)
   }
 
   function getGameWord()
@@ -48,6 +59,7 @@ const Game = () => {
     }
 
     if(hasWon()){
+      setHasPlayerWon(true)
       launchGame();
       return;
     }
@@ -107,6 +119,14 @@ const Game = () => {
         submitWordAttempt={submitWordAttempt}
         wordAttempt={wordAttempt}
         setWordAttempt={setWordAttempt}/>
+      <Win
+        hasPlayerWon={hasPlayerWon}
+        setWonLost={setWonLost}
+      />
+      <Lose
+        hasPlayerLost={hasPlayerLost}
+        setWonLost={setWonLost}
+      />
     </>
   );
 }
