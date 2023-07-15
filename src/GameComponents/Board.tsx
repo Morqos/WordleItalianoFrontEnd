@@ -28,8 +28,8 @@ const Item = styled(Paper)(({ theme }) => ({
   
   color: "white",
 
-  height: 45,
-  width: 45
+  height: 47,
+  width: 47
 }));
 
 const Board = (

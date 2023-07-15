@@ -2,21 +2,53 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grow from '@mui/material/Grow';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
 import { Theme } from '@mui/material/styles';
 import { useState } from 'react';
+import { DARKER_GREEN, GREEN } from '../Common';
 
-const icon = (
-  <Paper sx={{ m: 1 }} elevation={4}>
-    <Box component="svg" sx={{ width: 100, height: 100 }}>
-      <Box
-        component="polygon"
-        sx={{
-          fill: (theme: Theme) => theme.palette.common.white,
-          stroke: (theme) => theme.palette.divider,
-          strokeWidth: 1,
-        }}
-        points="0,100 50,00, 100,100"
-      />
+const WinningIcon = (setWonLost: any) => (
+  <Paper sx={{ m: 1, backgroundColor: '#1a1a1b', color: 'white'}} elevation={4}>
+    <Box sx={{ width: 300, height: 200,  mx: 'auto'}}>
+
+          <Typography
+            sx={{
+              justifyContent: 'center',
+              display: 'flex',
+              fontSize: 36,
+              mt: 5
+            }}
+          >
+          <Box sx={{ fontWeight: 'bold', m: 1 }}>
+            HAI VINTO!
+          </Box>
+          </Typography>
+
+          <Button
+            size="large"
+            variant="contained"
+            disableRipple
+            onClick={setWonLost}
+            sx={{
+              color: "white",
+              backgroundColor: GREEN,
+              justifyContent: 'center',
+              display: 'flex',
+              mt: 4,
+              mx: 'auto',
+              '&:hover': {
+                backgroundColor: DARKER_GREEN,
+                borderColor: 'white',
+                boxShadow: 'none',
+              }
+            }}
+            >
+            Continua a Giocare
+          </Button>
     </Box>
   </Paper>
 );
@@ -31,10 +63,9 @@ const Win = (
      <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={hasPlayerWon}
-        onClick={setWonLost}
       >
-      <Grow in={hasPlayerWon}>{icon}</Grow>
-      </Backdrop>
+      <Grow in={hasPlayerWon}>{WinningIcon(setWonLost)}</Grow>
+    </Backdrop>
     </>
   );
 }

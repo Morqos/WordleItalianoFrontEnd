@@ -43,6 +43,7 @@ const Game = () => {
   {
     setHasPlayerWon(false)
     setHasPlayerLost(false)
+    launchGame();
   }
 
   function getGameWord()
@@ -60,7 +61,11 @@ const Game = () => {
 
     if(hasWon()){
       setHasPlayerWon(true)
-      launchGame();
+      return;
+    }
+
+    if(hasLost()) {
+      setHasPlayerLost(true)
       return;
     }
 
@@ -83,6 +88,10 @@ const Game = () => {
       }
     }
     return hasWon
+  }
+
+  function hasLost() {
+    return attemptNumber >= 5
   }
 
   function updateLettersAttempted() {
@@ -124,6 +133,7 @@ const Game = () => {
         setWonLost={setWonLost}
       />
       <Lose
+        gameWord={gameWord}
         hasPlayerLost={hasPlayerLost}
         setWonLost={setWonLost}
       />

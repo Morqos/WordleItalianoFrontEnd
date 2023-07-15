@@ -13,10 +13,13 @@ export type presenceToColor = {
 
 export const mapPresenceToColor: presenceToColor = {};
 
+export const GREEN = "#538d4e"
+export const DARKER_GREEN = "#4A7E46"
+
 mapPresenceToColor[NOT_SELECTED] = "#818384"
 mapPresenceToColor[NOT_PRESENT] = "#3A3A3C"
 mapPresenceToColor[PRESENT_WRONG_PLACE] = "#b59f3b"
-mapPresenceToColor[PRESENT_RIGHT_PLACE] = "#538d4e"
+mapPresenceToColor[PRESENT_RIGHT_PLACE] = GREEN
 
 
 const mapLetterToPresence: letterToPresence = {};
