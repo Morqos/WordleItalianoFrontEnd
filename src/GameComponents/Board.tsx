@@ -1,4 +1,7 @@
-import * as React from 'react';
+import React, {useEffect, useState} from "react";
+
+import CheckMobileScreen from '../ViewChecks/CheckMobileScreen';
+
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -27,9 +30,6 @@ const Item = styled(Paper)(({ theme }) => ({
   display: 'flex',
   
   color: "white",
-
-  height: 47,
-  width: 47
 }));
 
 const Board = (
@@ -42,6 +42,21 @@ const Board = (
         setWordAttempt: any
       }
   ) => {
+
+  const WIDTH_BOARD = 350
+  const LENGTH_SIDE_CELL = 47
+  const FONT_SIZE_MOBILE = 25
+
+  const WIDTH_BOARD_MOBILE = 210
+  const LENGTH_SIDE_CELL_MOBILE = 24
+  const FONT_SIZE = 42
+
+  let isMobileScreen = CheckMobileScreen();
+
+  const [lengthSideCell, setLengthSideCell] = useState(LENGTH_SIDE_CELL)
+  const [widthBoard, setWidthBoard] = useState(WIDTH_BOARD)
+  const [letterFontSize, setLetterFontSize] = useState(FONT_SIZE)
+
 
   function getCell(_row: number, _position: number) {
 
@@ -72,7 +87,10 @@ const Board = (
       <Grid item xs={2.4} md={2.4}>
         <Item
           sx={{
-            backgroundColor: colorBackground
+            backgroundColor: colorBackground,
+            height: lengthSideCell,
+            width: lengthSideCell,
+            fontSize: letterFontSize
           }}  
         >
           {wordToDisplay[_position]}
@@ -126,8 +144,32 @@ const Board = (
     return arrayColorsWord
   }
 
+  useEffect(() => {
+    if(isMobileScreen) {
+      setDimensionsForMobile()
+    }
+    else {
+      setDimensionsForDesktop()
+    }
+  });
+
+  function setDimensionsForMobile()
+  {
+    setLengthSideCell(LENGTH_SIDE_CELL_MOBILE)
+    setWidthBoard(WIDTH_BOARD_MOBILE)
+    setLetterFontSize(FONT_SIZE_MOBILE)
+  }
+
+  function setDimensionsForDesktop()
+  {
+    setLengthSideCell(LENGTH_SIDE_CELL)
+    setWidthBoard(WIDTH_BOARD)
+    setLetterFontSize(FONT_SIZE)
+  }
+
+
   return (
-    <Box sx={{ mt: 5, mx: 'auto', width: 350}}>
+    <Box sx={{ mt: 5, mx: 'auto', width: widthBoard}}>
       <Grid
         container
         spacing={1}

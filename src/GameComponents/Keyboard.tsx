@@ -215,7 +215,7 @@ const Keyboard = (
 
   return (
     <>
-    <Box sx={{ mt: 10, mx: 'auto', width: firstRowWidth}}>
+    <Box sx={{ mt: 5, mx: 'auto', width: firstRowWidth}}>
       <Grid
         container
         spacing={1}
