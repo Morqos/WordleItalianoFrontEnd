@@ -1,0 +1,12 @@
+name: wordle.tsx CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn install && yarn build
