@@ -80,9 +80,7 @@ const Lose = (
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={hasPlayerLost}
       >
-        <Grow in={hasPlayerLost}>
-          {LosingIcon(gameWord, setWonLost)}
-        </Grow>
+        {hasPlayerLost && LosingIcon(gameWord, setWonLost)}
       </Backdrop>
     </>
   );

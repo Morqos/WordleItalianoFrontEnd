@@ -12,6 +12,7 @@ import mapLetterToPresence, {
 import words5Letters from "../Dictionaries/words_5_letters.json"
 import { useEffect, useState } from "react";
 import Lose from "./EndGame/Lose";
+import WordNotInList from "./Alerts/WordNotInList";
 
 const Game = () => {
 
@@ -24,6 +25,7 @@ const Game = () => {
   const [hasPlayerWon, setHasPlayerWon] = useState(false)
   const [hasPlayerLost, setHasPlayerLost] = useState(false)
 
+  const [wordAttemptedNotInList, setWordAttemptedNotInList] = useState(false)
 
   useEffect(() => {
     launchGame();
@@ -41,8 +43,8 @@ const Game = () => {
 
   function setWonLost()
   {
-    setHasPlayerWon(false)
     setHasPlayerLost(false)
+    setHasPlayerWon(false)
     launchGame();
   }
 
@@ -69,6 +71,14 @@ const Game = () => {
       return;
     }
 
+    if(!isAttemptAcceptable()) {
+      setWordAttemptedNotInList(true);
+      setTimeout(() => {
+        setWordAttemptedNotInList(false);
+      }, 1500);
+      return;
+    }
+
     let tmpAttempts = attempts
     tmpAttempts.push(wordAttempt)
     setAttempts(tmpAttempts)
@@ -76,6 +86,10 @@ const Game = () => {
     updateLettersAttempted()
     setAttemptNumber(attemptNumber + 1)
     setWordAttempt("")
+  }
+
+  function isAttemptAcceptable(){
+    return words5Letters["words"].includes(wordAttempt.toLocaleLowerCase())
   }
 
   function hasWon(){
@@ -112,10 +126,12 @@ const Game = () => {
     setLettersAttempted(lettersAttempted)
   }
 
-  console.log(gameWord)
-
   return ( 
     <>
+      <WordNotInList 
+        isOpen={wordAttemptedNotInList}
+        setIsOpen={setWordAttemptedNotInList}
+      />
       <Board
         gameWord={gameWord}
         attemptNumber={attemptNumber}
