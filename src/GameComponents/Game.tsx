@@ -9,7 +9,7 @@ import mapLetterToPresence, {
   letterToPresence
 } from "./Common";
 
-import words5Letters from "../Dictionaries/words_5_letters.json"
+import { Words5Letters } from "../Dictionaries/WordsList"
 import { useEffect, useState } from "react";
 import Lose from "./EndGame/Lose";
 import WordNotInList from "./Alerts/WordNotInList";
@@ -50,9 +50,9 @@ const Game = () => {
 
   function getGameWord()
   {
-    const sizeDictionary5Letters = words5Letters["words"].length;
+    const sizeDictionary5Letters = Words5Letters.length;
     const indexWord = Math.floor(Math.random() * sizeDictionary5Letters);
-    return words5Letters["words"][indexWord].toUpperCase();
+    return Words5Letters[indexWord].toUpperCase();
   }
 
   function submitWordAttempt()
@@ -89,7 +89,7 @@ const Game = () => {
   }
 
   function isAttemptAcceptable(){
-    return words5Letters["words"].includes(wordAttempt.toLocaleLowerCase())
+    return Words5Letters.includes(wordAttempt.toLocaleLowerCase())
   }
 
   function hasWon(){
