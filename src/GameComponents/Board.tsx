@@ -43,14 +43,16 @@ const Board = (
       }
   ) => {
 
+  const TOP_MARGIN = 5
   const WIDTH_BOARD = 350
   const LENGTH_SIDE_CELL = 47
   const FONT_SIZE = 42
   const SPACING_ROWS = 1
   
-  const WIDTH_BOARD_MOBILE = 210
-  const LENGTH_SIDE_CELL_MOBILE = 24
-  const FONT_SIZE_MOBILE = 25
+  const TOP_MARGIN_MOBILE = 3
+  const WIDTH_BOARD_MOBILE = 300
+  const LENGTH_SIDE_CELL_MOBILE = 38
+  const FONT_SIZE_MOBILE = 35
   const SPACING_ROWS_MOBILE = 0.5
 
   let isMobileScreen = CheckMobileScreen();
@@ -59,6 +61,7 @@ const Board = (
   const [widthBoard, setWidthBoard] = useState(WIDTH_BOARD)
   const [letterFontSize, setLetterFontSize] = useState(FONT_SIZE)
   const [spacingRows, setSpacingRows] = useState(SPACING_ROWS)
+  const [topMargin, setTopMargin] = useState(TOP_MARGIN)
 
 
   function getCell(_row: number, _position: number) {
@@ -162,6 +165,7 @@ const Board = (
     setWidthBoard(WIDTH_BOARD_MOBILE)
     setLetterFontSize(FONT_SIZE_MOBILE)
     setSpacingRows(SPACING_ROWS_MOBILE)
+    setTopMargin(TOP_MARGIN_MOBILE)
   }
   
   function setDimensionsForDesktop()
@@ -170,11 +174,12 @@ const Board = (
     setWidthBoard(WIDTH_BOARD)
     setLetterFontSize(FONT_SIZE)
     setSpacingRows(SPACING_ROWS)
+    setTopMargin(TOP_MARGIN)
   }
 
 
   return (
-    <Box sx={{ mt: 5, mx: 'auto', width: widthBoard}}>
+    <Box sx={{ mt: topMargin, mx: 'auto', width: widthBoard}}>
       <Grid
         container
         spacing={spacingRows}

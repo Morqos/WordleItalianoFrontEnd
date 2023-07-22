@@ -70,12 +70,17 @@ const Keyboard = (
   const ENTER_FONT_SIZE = 18
   const ENTER_FONT_SIZE_MOBILE = 10
 
+  const TOP_MARGIN = 5
+  const TOP_MARGIN_MOBILE = 3
+
   const [heightLetter, setHeightLetter] = useState(HEIGHT_LETTER)
   const [widthLetter, setWidthLetter] = useState(WIDTH_LETTER)
   const [widthBackEnter, setWidthBackEnter] = useState(WIDTH_ENTER_AND_BACK)
 
   const [letterFontSize, setLetterFontSize] = useState(LETTER_FONT_SIZE)
   const [enterFontSize, setEnterFontSize] = useState(ENTER_FONT_SIZE)
+
+  const [topMargin, setTopMargin] = useState(TOP_MARGIN)
 
 
   function getKeyFirstRow(_letter: string) {
@@ -197,6 +202,8 @@ const Keyboard = (
     setWidthBackEnter(WIDTH_ENTER_AND_BACK_MOBILE)
     setEnterFontSize(ENTER_FONT_SIZE_MOBILE)
     setLetterFontSize(LETTER_FONT_SIZE_MOBILE)
+
+    setTopMargin(TOP_MARGIN_MOBILE)
   }
 
   function setDimensionsForDesktop()
@@ -210,12 +217,14 @@ const Keyboard = (
     setWidthBackEnter(WIDTH_ENTER_AND_BACK)
     setEnterFontSize(ENTER_FONT_SIZE)
     setLetterFontSize(LETTER_FONT_SIZE)
+
+    setTopMargin(TOP_MARGIN)
   }
 
 
   return (
     <>
-    <Box sx={{ mt: 5, mx: 'auto', width: firstRowWidth}}>
+    <Box sx={{ mt: topMargin, mx: 'auto', width: firstRowWidth}}>
       <Grid
         container
         spacing={1}
