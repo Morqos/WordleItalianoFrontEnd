@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import './Style/index.css';
-import './Style/card.css';
 
 import HomePage from './Pages/HomePage';
 import Layout from './PageComponents/Layout'

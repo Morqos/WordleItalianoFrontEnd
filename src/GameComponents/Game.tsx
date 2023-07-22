@@ -27,6 +27,12 @@ const Game = () => {
 
   const [wordAttemptedNotInList, setWordAttemptedNotInList] = useState(false)
 
+  const [animation0Triggered, setAnimation0Triggered] = useState(false)
+  const [animation1Triggered, setAnimation1Triggered] = useState(false)
+  const [animation2Triggered, setAnimation2Triggered] = useState(false)
+  const [animation3Triggered, setAnimation3Triggered] = useState(false)
+  const [animation4Triggered, setAnimation4Triggered] = useState(false)
+
   useEffect(() => {
     launchGame();
   }, []);
@@ -68,6 +74,8 @@ const Game = () => {
       }, 1500);
       return;
     }
+
+    triggerCellAnimations()
         
     let tmpAttempts = attempts
     tmpAttempts.push(wordAttempt)
@@ -87,6 +95,32 @@ const Game = () => {
       return;
     }
   }
+
+  function triggerCellAnimations()
+  {
+    setAnimation0Triggered(true);
+    setTimeout(() => {
+      setAnimation1Triggered(true);
+    }, 300);
+    setTimeout(() => {
+      setAnimation2Triggered(true);
+    }, 600);
+    setTimeout(() => {
+      setAnimation3Triggered(true);
+    }, 900);
+    setTimeout(() => {
+      setAnimation4Triggered(true);
+    }, 1200);
+    setTimeout(() => {
+      setAnimation0Triggered(false);
+      setAnimation1Triggered(false);
+      setAnimation2Triggered(false);
+      setAnimation3Triggered(false);
+      setAnimation4Triggered(false);
+    }, 1800);
+  }
+
+  console.log(gameWord)
 
   function isAttemptAcceptable(){
     return Words5Letters.includes(wordAttempt.toLocaleLowerCase())
@@ -133,6 +167,12 @@ const Game = () => {
         setIsOpen={setWordAttemptedNotInList}
       />
       <Board
+        animation0Triggered={animation0Triggered}
+        animation1Triggered={animation1Triggered}
+        animation2Triggered={animation2Triggered}
+        animation3Triggered={animation3Triggered}
+        animation4Triggered={animation4Triggered}
+
         gameWord={gameWord}
         attemptNumber={attemptNumber}
         attempts={attempts}

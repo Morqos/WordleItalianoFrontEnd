@@ -33,8 +33,26 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Board = (
-    {gameWord, attemptNumber, attempts, wordAttempt, setWordAttempt}:
+    {
+      animation0Triggered,
+      animation1Triggered,
+      animation2Triggered,
+      animation3Triggered,
+      animation4Triggered,
+
+      gameWord,
+      attemptNumber,
+      attempts,
+      wordAttempt,
+      setWordAttempt
+    }:
       {
+        animation0Triggered: boolean,
+        animation1Triggered: boolean,
+        animation2Triggered: boolean,
+        animation3Triggered: boolean,
+        animation4Triggered: boolean,
+
         gameWord: string,
         attemptNumber: number,
         attempts: string[],
@@ -66,6 +84,30 @@ const Board = (
 
   function getCell(_row: number, _position: number) {
 
+    let animationTriggered = false
+    if(_row === attemptNumber - 1)
+    {
+      switch (_position) {
+        case 0:
+          animationTriggered = animation0Triggered
+          break;
+        case 1:
+          animationTriggered = animation1Triggered
+          break;
+        case 2:
+          animationTriggered = animation2Triggered
+          break;
+        case 3:
+          animationTriggered = animation3Triggered
+          break;
+        case 4:
+          animationTriggered = animation4Triggered
+          break;
+        default:
+          break;
+      }
+    }
+
     let colorBackground = "transparent"
     let wordToDisplay = "     "
     if(_row === attemptNumber){
@@ -93,13 +135,27 @@ const Board = (
       <Grid item xs={2.4} md={2.4}>
         <Item
           sx={{
+            animation: animationTriggered ? "spin 0.5s ease 1" : "",
+            "@keyframes spin": {
+              "0%": {
+                transform: "rotateX(0deg)",
+              },
+              "50%": {
+                transform: "rotateX(90deg)"
+              },
+              "100%": {
+                transform: "rotate(0deg)",
+              },
+            },
             backgroundColor: colorBackground,
             height: lengthSideCell,
             width: lengthSideCell,
             fontSize: letterFontSize
           }}  
         >
-          {wordToDisplay[_position]}
+          <div className="card-normal">
+            {wordToDisplay[_position]}
+          </div>
         </Item>
       </Grid>
     );
