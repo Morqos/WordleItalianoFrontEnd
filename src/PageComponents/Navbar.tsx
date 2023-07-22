@@ -58,7 +58,7 @@ const Navbar = () => {
               fontWeight: "bold",
               fontFamily: "Helvetica Neue, Helvetica"
             }}>
-            Wordle Italiano
+            Trova la parola
           </Typography>
           {/* <Button color="inherit">Impostazioni</Button> */}
         </Toolbar>
