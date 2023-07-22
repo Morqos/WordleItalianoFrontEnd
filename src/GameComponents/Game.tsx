@@ -60,17 +60,7 @@ const Game = () => {
     if(wordAttempt.length !== 5){
       return
     }
-
-    if(hasWon()){
-      setHasPlayerWon(true)
-      return;
-    }
-
-    if(hasLost()) {
-      setHasPlayerLost(true)
-      return;
-    }
-
+    
     if(!isAttemptAcceptable()) {
       setWordAttemptedNotInList(true);
       setTimeout(() => {
@@ -78,14 +68,24 @@ const Game = () => {
       }, 1500);
       return;
     }
-
+        
     let tmpAttempts = attempts
     tmpAttempts.push(wordAttempt)
     setAttempts(tmpAttempts)
-
+    
     updateLettersAttempted()
     setAttemptNumber(attemptNumber + 1)
     setWordAttempt("")
+
+    if(hasLost()) {
+      setHasPlayerLost(true)
+      return;
+    }
+    
+    if(hasWon()){
+      setHasPlayerWon(true)
+      return;
+    }
   }
 
   function isAttemptAcceptable(){
