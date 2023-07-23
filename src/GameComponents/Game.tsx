@@ -92,6 +92,13 @@ const Game = () => {
 
     setAttemptNumber(attemptNumber + 1)
     setWordAttempt("")
+    
+    if(hasWon()){
+      setTimeout(() => {
+        setHasPlayerWon(true)
+      }, 1500);
+      return;
+    }
 
     if(hasLost()) {
       setTimeout(() => {
@@ -100,12 +107,6 @@ const Game = () => {
       return;
     }
     
-    if(hasWon()){
-      setTimeout(() => {
-        setHasPlayerWon(true)
-      }, 1500);
-      return;
-    }
   }
 
   function fillBoardColors()
