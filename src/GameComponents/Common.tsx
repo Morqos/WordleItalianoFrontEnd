@@ -1,5 +1,6 @@
-export const NOT_SELECTED = 0
+export const TRANSPARENT = -2
 export const NOT_PRESENT = -1
+export const NOT_SELECTED = 0
 export const PRESENT_WRONG_PLACE = 1
 export const PRESENT_RIGHT_PLACE = 2
 
@@ -16,6 +17,7 @@ export const mapPresenceToColor: presenceToColor = {};
 export const GREEN = "#538d4e"
 export const DARKER_GREEN = "#4A7E46"
 
+mapPresenceToColor[TRANSPARENT] = "transparent"
 mapPresenceToColor[NOT_SELECTED] = "#818384"
 mapPresenceToColor[NOT_PRESENT] = "#3A3A3C"
 mapPresenceToColor[PRESENT_WRONG_PLACE] = "#b59f3b"
@@ -52,5 +54,15 @@ mapLetterToPresence['V'] = NOT_SELECTED;
 mapLetterToPresence['B'] = NOT_SELECTED;
 mapLetterToPresence['N'] = NOT_SELECTED;
 mapLetterToPresence['M'] = NOT_SELECTED;
+
+
+export const boardColors = [
+  [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+  [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+  [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+  [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+  [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+  [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT]
+]
 
 export default mapLetterToPresence;
