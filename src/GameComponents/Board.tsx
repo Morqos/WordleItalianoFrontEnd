@@ -40,6 +40,8 @@ const Board = (
       animation3Triggered,
       animation4Triggered,
 
+      boardColorsMatrix,
+
       gameWord,
       attemptNumber,
       attempts,
@@ -52,6 +54,8 @@ const Board = (
         animation2Triggered: boolean,
         animation3Triggered: boolean,
         animation4Triggered: boolean,
+
+        boardColorsMatrix: number[][]
 
         gameWord: string,
         attemptNumber: number,
@@ -84,52 +88,9 @@ const Board = (
 
   function getCell(_row: number, _position: number) {
 
-    let animationTriggered = false
-    if(_row === attemptNumber - 1)
-    {
-      switch (_position) {
-        case 0:
-          animationTriggered = animation0Triggered
-          break;
-        case 1:
-          animationTriggered = animation1Triggered
-          break;
-        case 2:
-          animationTriggered = animation2Triggered
-          break;
-        case 3:
-          animationTriggered = animation3Triggered
-          break;
-        case 4:
-          animationTriggered = animation4Triggered
-          break;
-        default:
-          break;
-      }
-    }
-
-    let colorBackground = "transparent"
-    let wordToDisplay = "     "
-    if(_row === attemptNumber){
-      wordToDisplay = wordAttempt
-    }
-    else if(_row < attemptNumber) {
-      wordToDisplay = attempts[_row]
-      const colorsWordToDisplay = getColorsWord(wordToDisplay);
-      switch (colorsWordToDisplay[_position]) {
-        case NOT_PRESENT:
-          colorBackground = mapPresenceToColor[NOT_PRESENT]
-          break;
-        case PRESENT_RIGHT_PLACE:
-          colorBackground = mapPresenceToColor[PRESENT_RIGHT_PLACE]
-          break;
-        case PRESENT_WRONG_PLACE:
-          colorBackground = mapPresenceToColor[PRESENT_WRONG_PLACE]
-          break;
-        default:
-          break;
-      }
-    }
+    const animationTriggered = getAnimationTriggered(_row, _position)
+    const colorBackground = mapPresenceToColor[boardColorsMatrix[_row][_position]]
+    const wordToDisplay = getWordToDiplay(_row)
 
     return (
       <Grid item xs={2.4} md={2.4}>
@@ -161,49 +122,42 @@ const Board = (
     );
   }
 
-  function getColorsWord(wordRow: string): number[]{
-
-    const arrayColorsWord = Array(gameWord.length).fill(NOT_PRESENT)    
-
-    const letterToOccurrences = new Map<string, number>();
-    for (let i = 0; i < gameWord.length; i++) {
-      const letter = gameWord[i]
-      
-      letterToOccurrences.set(
-        letter,
-          letterToOccurrences.has(letter) ?
-            letterToOccurrences.get(letter)! + 1 :
-            1
-      )
-    }
-
-    for (let i = 0; i < wordRow.length; i++) {
-      const currentLetter = wordRow[i]
-      if(currentLetter === gameWord[i]) {
-        arrayColorsWord[i] = PRESENT_RIGHT_PLACE
-        letterToOccurrences.set(
-          currentLetter,
-          letterToOccurrences.has(currentLetter) ?
-            letterToOccurrences.get(currentLetter)! - 1 :
-            1
-        )
+  function getAnimationTriggered(_row: number, _position: number) {
+    let animationTriggered = false
+    if(_row === attemptNumber - 1)
+    {
+      switch (_position) {
+        case 0:
+          animationTriggered = animation0Triggered
+          break;
+        case 1:
+          animationTriggered = animation1Triggered
+          break;
+        case 2:
+          animationTriggered = animation2Triggered
+          break;
+        case 3:
+          animationTriggered = animation3Triggered
+          break;
+        case 4:
+          animationTriggered = animation4Triggered
+          break;
+        default:
+          break;
       }
     }
+    return animationTriggered
+  }
 
-    for (let i = 0; i < wordRow.length; i++) {
-      const currentLetter = wordRow[i]
-      if((currentLetter !== gameWord[i]) &&
-          gameWord.includes(currentLetter) &&
-          letterToOccurrences.has(currentLetter) &&
-          letterToOccurrences.get(currentLetter)! > 0) {
-        arrayColorsWord[i] = PRESENT_WRONG_PLACE
-        letterToOccurrences.set(
-          currentLetter,
-          letterToOccurrences.get(currentLetter)! - 1)
-      }
+  function getWordToDiplay(_row: number){
+    let wordToDisplay = "     "
+    if(_row === attemptNumber){
+      wordToDisplay = wordAttempt
     }
-
-    return arrayColorsWord
+    else if(_row < attemptNumber) {
+      wordToDisplay = attempts[_row]
+    }
+    return wordToDisplay
   }
 
   useEffect(() => {
