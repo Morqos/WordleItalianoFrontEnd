@@ -17,6 +17,7 @@ const Navbar = () => {
   const FONT_SIZE_WORDLE_MOBILE = 24
 
   const [fontSizeWordle, setFontSizeWordle] = useState(FONT_SIZE_WORDLE)
+  const [randomNumber, setRandomNumber] = useState(0)
 
   useEffect(() => {
     if(isMobileScreen) {
@@ -35,6 +36,16 @@ const Navbar = () => {
   function setDimensionsForDesktop()
   {
     setFontSizeWordle(FONT_SIZE_WORDLE)
+  }
+
+  function getRandomNumber()
+  {
+    fetch('https://ed01-82-165-182-65.ngrok.io/question/allQuestions').then(response => {
+      return response.json();
+    }).then(data => {
+      console.log(data)
+      // setRandomNumber(data.number)
+    })
   }
 
   return (
@@ -60,7 +71,14 @@ const Navbar = () => {
             }}>
             Trova la parola
           </Typography>
-          {/* <Button color="inherit">Impostazioni</Button> */}
+          <Button
+            onClick={() => {
+              getRandomNumber()
+            }}
+            color="inherit"
+          >
+            {randomNumber}
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
